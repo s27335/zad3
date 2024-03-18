@@ -6,21 +6,21 @@ public abstract class Container
     protected double NetWeight { get; set; }
     protected double MaxWeight { get; }
     protected int Height { get; set; }
-    protected int Glebokosc { get; set; }
+    protected int Depth { get; set; }
 
 
     protected Container(double weight,double netWeight,double maxWeight,int height,int depth)
     {
-        Masa = masa;
-        MasaWlasna = masaWlasna;
-        MaxLadownosc = maxLadownosc;
-        Wysokosc = wysokosc;
-        Glebokosc = glebokosc;
+        Weight = weight;
+        NetWeight = netWeight;
+        MaxWeight = maxWeight;
+        Height = height;
+        Depth = depth;
     }
 
 
-    protected abstract void oprozLadunek();
-    protected abstract void zaladujLadunek();
+    protected abstract void DeleteProduct(string product);
+    protected abstract void AddProduct(string product,double weight);
     
 
 
