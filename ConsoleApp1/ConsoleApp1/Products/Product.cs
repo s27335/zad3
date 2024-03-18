@@ -2,10 +2,10 @@
 
 public class Product
 {
-    private string Name { get; }
-    private string Type { get; }
+    public string Name { get; }
+    public Type Type { get; }
 
-    public Product(string name, string type)
+    public Product(string name, Type type)
     {
         Name = name;
         Type = type;

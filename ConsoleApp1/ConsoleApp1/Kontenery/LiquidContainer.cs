@@ -20,7 +20,7 @@ public class LiquidContainer : Container
     protected override void AddProduct(Product product, double weight)
     {
         
-        if (product)
+        if (product.Type.Equals("Liquid"))
         {
             productsList.Add(product);
             Weight += weight;
