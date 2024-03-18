@@ -19,8 +19,8 @@ public abstract class Container
     }
 
 
-    protected abstract void DeleteProduct(string product);
-    protected abstract void AddProduct(string product,double weight);
+    protected abstract void DeleteProduct(Product product);
+    protected abstract void AddProduct(Product product,double weight);
     
 
 

@@ -1,8 +1,8 @@
-﻿namespace ConsoleApp1.Kontenery;
+﻿namespace ConsoleApp1;
 
 public class LiquidContainer : Container
 {
-    private List<string> productsList;
+    private List<Product> productsList;
     private string Id { get; }
     private static int idNum;
 
@@ -12,14 +12,19 @@ public class LiquidContainer : Container
         idNum++;
     }
 
-    protected override void DeleteProduct(string product)
+    protected override void DeleteProduct(Product product)
     {
         productsList.Remove(product);
     }
 
-    protected override void AddProduct(string product, double weight)
+    protected override void AddProduct(Product product, double weight)
     {
-        productsList.Add(product);
-        Weight += weight;
+        
+        if (product)
+        {
+            productsList.Add(product);
+            Weight += weight;
+        }
+        
     }
 }
