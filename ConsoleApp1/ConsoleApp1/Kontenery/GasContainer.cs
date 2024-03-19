@@ -30,19 +30,7 @@ public class GasContainer: Container, IHazardNotifier
         
         if (product.Type.Equals(ProductType.Gas))
         {
-            if (isDangerous && pWeight+Weight > 0.5*MaxWeight)
-            {
-                SendMessage();
-            }
-            else if (pWeight+Weight > 0.9*MaxWeight)
-            {
-                SendMessage();
-            }
-            else
-            {
-                productsList.Add(product);
-                Weight += pWeight;
-            }
+            
             
         }
         

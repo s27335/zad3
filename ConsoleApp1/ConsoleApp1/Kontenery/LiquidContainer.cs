@@ -5,9 +5,11 @@ public class LiquidContainer : Container, IHazardNotifier
     private List<Product> productsList;
     private string Id { get; }
     private static int idNum;
+    private bool isDangerous;
 
-    public LiquidContainer(double weight, double netWeight, double maxWeight, int height, int depth) : base(weight, netWeight, maxWeight, height, depth)
+    public LiquidContainer(double weight, double netWeight, double maxWeight, int height, int depth,bool isDangerous) : base(weight, netWeight, maxWeight, height, depth)
     {
+        this.isDangerous = this.isDangerous;
         Id = "KON-L-" + idNum;
         idNum++;
     }
@@ -27,8 +29,19 @@ public class LiquidContainer : Container, IHazardNotifier
         
         if (product.Type.Equals(ProductType.Liquid))
         {
-            productsList.Add(product);
-            Weight += pWeight;
+            if (isDangerous && pWeight+Weight > 0.5*MaxWeight)
+            {
+                SendMessage();
+            }
+            else if (pWeight+Weight > 0.9*MaxWeight)
+            {
+                SendMessage();
+            }
+            else
+            {
+                productsList.Add(product);
+                Weight += pWeight;
+            }
         }
         
     }
