@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApp1;
 
-public class LiquidContainer : Container
+public class LiquidContainer : Container, IHazardNotifier
 {
     private List<Product> productsList;
     private string Id { get; }
@@ -20,11 +20,16 @@ public class LiquidContainer : Container
     protected override void AddProduct(Product product, double weight)
     {
         
-        if (product.Type.Equals("Liquid"))
+        if (product.Type.Equals(ProductType.Liquid))
         {
             productsList.Add(product);
             Weight += weight;
         }
         
+    }
+
+    public void sendMessage()
+    {
+        Console.WriteLine("Container: " + Id + " in a dangerous situation");
     }
 }
