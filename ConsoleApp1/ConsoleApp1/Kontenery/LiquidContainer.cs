@@ -17,18 +17,23 @@ public class LiquidContainer : Container, IHazardNotifier
         productsList.Remove(product);
     }
 
-    protected override void AddProduct(Product product, double weight)
+    protected override void AddProduct(Product product, double pWeight)
     {
+        
+        if (pWeight+Weight > MaxWeight)
+        {
+            throw new OverfillException();
+        }
         
         if (product.Type.Equals(ProductType.Liquid))
         {
             productsList.Add(product);
-            Weight += weight;
+            Weight += pWeight;
         }
         
     }
 
-    public void sendMessage()
+    public void SendMessage()
     {
         Console.WriteLine("Container: " + Id + " in a dangerous situation");
     }
