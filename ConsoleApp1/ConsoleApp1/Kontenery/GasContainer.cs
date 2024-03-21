@@ -4,7 +4,7 @@ namespace ConsoleApp1;
 
 public class GasContainer: Container, IHazardNotifier
 {
-    private List<Product> productsList;
+    
     private string Id { get; }
     private static int idNum;
     private bool isDangerous;
@@ -16,22 +16,39 @@ public class GasContainer: Container, IHazardNotifier
         idNum++;
     }
 
-    protected override void DeleteProduct(Product product)
+    public override void DeleteProduct(Product product)
     {
-        productsList.Remove(product);
+        Weight -= productDic[product];
+        productDic.Remove(product);
     }
 
-    protected override void AddProduct(Product product, double pWeight)
+    public override void AddProduct(Product product, double pWeight)
     {
         if (pWeight+Weight > MaxWeight)
         {
             throw new OverfillException();
         }
         
-        if (product.Type.Equals(ProductType.Gas))
+        if (isDangerous && pWeight+Weight > 0.5*MaxWeight)
         {
-            
-            
+            SendMessage();
+        }
+        else if (pWeight+Weight > 0.9*MaxWeight)
+        {
+            SendMessage();
+        }
+        else
+        {
+            if (productDic.ContainsKey(product))
+            {
+                productDic[product] += pWeight;
+            }
+            else
+            { 
+                productDic.Add(product,pWeight);
+            }
+                
+            Weight += pWeight;
         }
         
     }

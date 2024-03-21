@@ -2,7 +2,6 @@
 
 public class ColdContainer: Container, IHazardNotifier
 {
-    private List<Product> productsList;
     private string Id { get; }
     private static int idNum;
 
@@ -12,12 +11,13 @@ public class ColdContainer: Container, IHazardNotifier
         idNum++;
     }
 
-    protected override void DeleteProduct(Product product)
+    public override void DeleteProduct(Product product)
     {
-        productsList.Remove(product);
+        Weight -= productDic[product];
+        productDic.Remove(product);
     }
 
-    protected override void AddProduct(Product product, double pWeight)
+    public override void AddProduct(Product product, double pWeight)
     {
         
         if (pWeight+Weight > MaxWeight)
@@ -27,7 +27,15 @@ public class ColdContainer: Container, IHazardNotifier
         
         if (product.Type.Equals(ProductType.Cold))
         {
-            productsList.Add(product);
+            if (productDic.ContainsKey(product))
+            {
+                productDic[product] += pWeight;
+            }
+            else
+            { 
+                productDic.Add(product,pWeight);
+            }
+                
             Weight += pWeight;
         }
         

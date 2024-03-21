@@ -2,24 +2,24 @@
 
 public class LiquidContainer : Container, IHazardNotifier
 {
-    private List<Product> productsList;
     private string Id { get; }
     private static int idNum;
     private bool isDangerous;
 
     public LiquidContainer(double weight, double netWeight, double maxWeight, int height, int depth,bool isDangerous) : base(weight, netWeight, maxWeight, height, depth)
     {
-        this.isDangerous = this.isDangerous;
+        this.isDangerous = isDangerous;
         Id = "KON-L-" + idNum;
         idNum++;
     }
 
-    protected override void DeleteProduct(Product product)
+    public override void DeleteProduct(Product product)
     {
-        productsList.Remove(product);
+        Weight -= productDic[product];
+        productDic.Remove(product);
     }
 
-    protected override void AddProduct(Product product, double pWeight)
+    public override void AddProduct(Product product, double pWeight)
     {
         
         if (pWeight+Weight > MaxWeight)
@@ -39,7 +39,15 @@ public class LiquidContainer : Container, IHazardNotifier
             }
             else
             {
-                productsList.Add(product);
+                if (productDic.ContainsKey(product))
+                {
+                    productDic[product] += pWeight;
+                }
+                else
+                { 
+                    productDic.Add(product,pWeight);
+                }
+                
                 Weight += pWeight;
             }
         }
