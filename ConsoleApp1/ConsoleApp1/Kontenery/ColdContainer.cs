@@ -3,7 +3,7 @@
 public class ColdContainer: Container, IHazardNotifier
 {
     private List<Product> ProductList { get; }
-    private double ContainerTemp { get; set; }
+    public double ContainerTemp { get; set; }
     private string Id { get; }
     private static int idNum;
 
