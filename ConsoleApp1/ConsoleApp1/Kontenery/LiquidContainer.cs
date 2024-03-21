@@ -2,21 +2,23 @@
 
 public class LiquidContainer : Container, IHazardNotifier
 {
+    private List<Product> LiquidList { get; }
     private string Id { get; }
     private static int idNum;
-    private bool isDangerous;
+    private bool IsDangerous { get; }
 
     public LiquidContainer(double weight, double netWeight, double maxWeight, int height, int depth,bool isDangerous) : base(weight, netWeight, maxWeight, height, depth)
     {
-        this.isDangerous = isDangerous;
+        LiquidList = new List<Product>();
+        IsDangerous = isDangerous;
         Id = "KON-L-" + idNum;
         idNum++;
     }
 
-    public override void DeleteProduct(Product product)
+    public override void DeleteProduct()
     {
-        Weight -= productDic[product];
-        productDic.Remove(product);
+        Weight = 0;
+        LiquidList.Clear();
     }
 
     public override void AddProduct(Product product, double pWeight)
@@ -24,12 +26,12 @@ public class LiquidContainer : Container, IHazardNotifier
         
         if (pWeight+Weight > MaxWeight)
         {
-            throw new OverfillException();
+            throw new OverfillException("Container " + Id + " overfilled!");
         }
         
-        if (product.Type.Equals(ProductType.Liquid))
+        if (product.ProdType.Equals(ProductType.Liquid))
         {
-            if (isDangerous && pWeight+Weight > 0.5*MaxWeight)
+            if (IsDangerous && pWeight+Weight > 0.5*MaxWeight)
             {
                 SendMessage();
             }
@@ -39,16 +41,16 @@ public class LiquidContainer : Container, IHazardNotifier
             }
             else
             {
-                if (productDic.ContainsKey(product))
+                if (LiquidList.Contains(product) | LiquidList.Count==0)
                 {
-                    productDic[product] += pWeight;
+                    LiquidList.Add(product);   
+                    Weight += pWeight;
                 }
                 else
-                { 
-                    productDic.Add(product,pWeight);
+                {
+                    Console.WriteLine("Container already contains other type of liquid!");
                 }
                 
-                Weight += pWeight;
             }
         }
         

@@ -1,54 +1,48 @@
-﻿using System.Xml.Schema;
+﻿using System.Xml.Resolvers;
+using System.Xml.Schema;
 
 namespace ConsoleApp1;
 
 public class GasContainer: Container, IHazardNotifier
 {
-    
+    private List<Product> GasList;
     private string Id { get; }
     private static int idNum;
-    private bool isDangerous;
+    private double Pressure { get; }
+    
 
-    public GasContainer(double weight, double netWeight, double maxWeight, int height, int depth,bool isDangerous) : base(weight, netWeight, maxWeight, height, depth)
+    public GasContainer(double weight, double netWeight, double maxWeight, int height, int depth,double pressure) : base(weight, netWeight, maxWeight, height, depth)
     {
-        this.isDangerous = isDangerous;
+        GasList = new List<Product>();
+        Pressure = pressure;
         Id = "KON-G-" + idNum;
         idNum++;
     }
 
-    public override void DeleteProduct(Product product)
+    public override void DeleteProduct()
     {
-        Weight -= productDic[product];
-        productDic.Remove(product);
+        Weight*=0.05;
     }
 
     public override void AddProduct(Product product, double pWeight)
     {
         if (pWeight+Weight > MaxWeight)
         {
-            throw new OverfillException();
+            throw new OverfillException("Container " + Id + " overfilled!");
         }
         
-        if (isDangerous && pWeight+Weight > 0.5*MaxWeight)
+        if (product.ProdType.Equals(ProductType.Gas))
         {
-            SendMessage();
-        }
-        else if (pWeight+Weight > 0.9*MaxWeight)
-        {
-            SendMessage();
-        }
-        else
-        {
-            if (productDic.ContainsKey(product))
+            if (GasList.Contains(product) | GasList.Count==0)
             {
-                productDic[product] += pWeight;
+                GasList.Add(product);   
+                Weight += pWeight;
             }
             else
-            { 
-                productDic.Add(product,pWeight);
+            {
+                Console.WriteLine("Container already contains other type of gas!");
             }
-                
-            Weight += pWeight;
+            
         }
         
     }

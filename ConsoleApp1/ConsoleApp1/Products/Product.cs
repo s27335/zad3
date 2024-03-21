@@ -3,12 +3,12 @@
 public class Product
 {
     public string Name { get; }
-    public ProductType Type { get; }
+    public ProductType ProdType { get; }
 
-    public Product(string name, ProductType type)
+    public Product(string name, ProductType prodType)
     {
         Name = name;
-        Type = type;
+        ProdType = prodType;
     }
     
     

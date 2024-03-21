@@ -2,19 +2,23 @@
 
 public class ColdContainer: Container, IHazardNotifier
 {
+    private List<Product> ProductList { get; }
+    private double ContainerTemp { get; set; }
     private string Id { get; }
     private static int idNum;
 
-    public ColdContainer(double weight, double netWeight, double maxWeight, int height, int depth) : base(weight, netWeight, maxWeight, height, depth)
+    public ColdContainer(double weight, double netWeight, double maxWeight, int height,int depth,double containerTemp) : base(weight, netWeight, maxWeight, height, depth)
     {
+        ContainerTemp = containerTemp;
+        ProductList = new List<Product>();
         Id = "KON-C-" + idNum;
         idNum++;
     }
 
-    public override void DeleteProduct(Product product)
+    public override void DeleteProduct()
     {
-        Weight -= productDic[product];
-        productDic.Remove(product);
+        Weight = 0;
+        ProductList.Clear();
     }
 
     public override void AddProduct(Product product, double pWeight)
@@ -22,21 +26,21 @@ public class ColdContainer: Container, IHazardNotifier
         
         if (pWeight+Weight > MaxWeight)
         {
-            throw new OverfillException();
+            throw new OverfillException("Container " + Id + " overfilled!");
         }
         
-        if (product.Type.Equals(ProductType.Cold))
+        if (product.ProdType.Equals(ProductType.Cold))
         {
-            if (productDic.ContainsKey(product))
+            if (
+                ProductList.Contains(product) | ProductList.Count==0)
             {
-                productDic[product] += pWeight;
+                ProductList.Add(product);   
+                Weight += pWeight;
             }
             else
-            { 
-                productDic.Add(product,pWeight);
+            {
+                Console.WriteLine("Container already contains other type of product!");
             }
-                
-            Weight += pWeight;
         }
         
     }
