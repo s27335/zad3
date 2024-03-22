@@ -1,14 +1,20 @@
 ﻿namespace ConsoleApp1;
 
-public class ColdContainer: Container, IHazardNotifier
+public class ColdContainer: Container
 {
-    private List<Product> ProductList { get; }
+    public List<Product> ProductList { get; }
+    public ColdProduct AllowedProduct { get; }
     public double ContainerTemp { get; set; }
-    private string Id { get; }
+    public string Id { get; }
     private static int idNum;
 
-    public ColdContainer(double weight, double netWeight, double maxWeight, int height,int depth,double containerTemp) : base(weight, netWeight, maxWeight, height, depth)
+    public ColdContainer(double weight, double netWeight, double maxWeight, int height,int depth, ColdProduct allowedProduct,double containerTemp) : base(weight, netWeight, maxWeight, height, depth)
     {
+        if (containerTemp < allowedProduct.Temperature)
+        {
+            throw new TemperatureException("Temperature of container must be equal or higher than temperature of given product");
+        }
+        AllowedProduct = allowedProduct;
         ContainerTemp = containerTemp;
         ProductList = new List<Product>();
         Id = "KON-C-" + idNum;
@@ -29,24 +35,19 @@ public class ColdContainer: Container, IHazardNotifier
             throw new OverfillException("Container " + Id + " overfilled!");
         }
         
-        if (product.ProdType.Equals(ProductType.Cold))
+        if (product.ProdType.Equals(ProductType.Cold) && product.Name == AllowedProduct.Name)
         {
-            if (
-                ProductList.Contains(product) | ProductList.Count==0)
-            {
+            
                 ProductList.Add(product);   
                 Weight += pWeight;
-            }
-            else
-            {
-                Console.WriteLine("Container already contains other type of product!");
-            }
+                
+        }
+        else
+        {
+            Console.WriteLine("Container can only storage: " + AllowedProduct.Name + "!");
         }
         
     }
-
-    public void SendMessage()
-    {
-        Console.WriteLine("Container: " + Id + " in a dangerous situation");
-    }
+    
+    
 }

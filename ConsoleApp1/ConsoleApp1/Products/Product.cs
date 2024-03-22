@@ -3,7 +3,7 @@
 public class Product
 {
     public string Name { get; }
-    public ProductType ProdType { get; }
+    public ProductType ProdType { get; set; }
 
     public Product(string name, ProductType prodType)
     {

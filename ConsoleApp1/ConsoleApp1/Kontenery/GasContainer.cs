@@ -5,10 +5,10 @@ namespace ConsoleApp1;
 
 public class GasContainer: Container, IHazardNotifier
 {
-    private List<Product> GasList;
-    private string Id { get; }
+    public List<Product> GasList;
+    public string Id { get; }
     private static int idNum;
-    private double Pressure { get; }
+    public double Pressure { get; }
     
 
     public GasContainer(double weight, double netWeight, double maxWeight, int height, int depth,double pressure) : base(weight, netWeight, maxWeight, height, depth)
@@ -43,6 +43,10 @@ public class GasContainer: Container, IHazardNotifier
                 Console.WriteLine("Container already contains other type of gas!");
             }
             
+        }
+        else
+        {
+            Console.WriteLine("Container can only storage gases!");
         }
         
     }

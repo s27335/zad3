@@ -2,10 +2,10 @@
 
 public class LiquidContainer : Container, IHazardNotifier
 {
-    private List<Product> LiquidList { get; }
-    private string Id { get; }
+    public List<Product> LiquidList { get; }
+    public string Id { get; }
     private static int idNum;
-    private bool IsDangerous { get; }
+    public bool IsDangerous { get; }
 
     public LiquidContainer(double weight, double netWeight, double maxWeight, int height, int depth,bool isDangerous) : base(weight, netWeight, maxWeight, height, depth)
     {
@@ -52,6 +52,10 @@ public class LiquidContainer : Container, IHazardNotifier
                 }
                 
             }
+        }
+        else
+        {
+            Console.WriteLine("Container can only storage liquids!");
         }
         
     }
