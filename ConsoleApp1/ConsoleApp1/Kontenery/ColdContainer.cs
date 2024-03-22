@@ -1,11 +1,12 @@
-﻿namespace ConsoleApp1;
+﻿using System.Text.Json.Serialization.Metadata;
+
+namespace ConsoleApp1;
 
 public class ColdContainer: Container
 {
     public List<Product> ProductList { get; }
     public ColdProduct AllowedProduct { get; }
     public double ContainerTemp { get; set; }
-    public string Id { get; }
     private static int idNum;
 
     public ColdContainer(double weight, double netWeight, double maxWeight, int height,int depth, ColdProduct allowedProduct,double containerTemp) : base(weight, netWeight, maxWeight, height, depth)
@@ -47,6 +48,11 @@ public class ColdContainer: Container
             Console.WriteLine("Container can only storage: " + AllowedProduct.Name + "!");
         }
         
+    }
+
+    public override void GetInformation()
+    {
+        Console.WriteLine("Cold container: " + Id + " contains: " + ProductList.Count + " elements and weigh " + (NetWeight+Weight) + "kg");
     }
     
     

@@ -3,7 +3,6 @@
 public class LiquidContainer : Container, IHazardNotifier
 {
     public List<Product> LiquidList { get; }
-    public string Id { get; }
     private static int idNum;
     public bool IsDangerous { get; }
 
@@ -60,6 +59,11 @@ public class LiquidContainer : Container, IHazardNotifier
         
     }
 
+    public override void GetInformation()
+    {
+        Console.WriteLine("Liquid container: " + Id + " contains: " + LiquidList.Count + " elements and weigh " + (NetWeight+Weight) + "kg");
+    }
+    
     public void SendMessage()
     {
         Console.WriteLine("Container: " + Id + " in a dangerous situation");

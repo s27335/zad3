@@ -6,7 +6,6 @@ namespace ConsoleApp1;
 public class GasContainer: Container, IHazardNotifier
 {
     public List<Product> GasList;
-    public string Id { get; }
     private static int idNum;
     public double Pressure { get; }
     
@@ -49,6 +48,11 @@ public class GasContainer: Container, IHazardNotifier
             Console.WriteLine("Container can only storage gases!");
         }
         
+    }
+
+    public override void GetInformation()
+    {
+        Console.WriteLine("Gas container: " + Id + " contains: " + GasList.Count + " elements and weigh " + (NetWeight+Weight) + "kg");
     }
 
     public void SendMessage()

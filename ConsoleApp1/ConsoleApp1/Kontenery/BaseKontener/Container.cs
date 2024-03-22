@@ -2,12 +2,12 @@
 
 public abstract class Container
 {
-    protected double Weight { get; set; }
-    protected double NetWeight { get; set; }
-    protected double MaxWeight { get; }
-    protected int Height { get; set; }
+    public double Weight { get; set; }
+    public double NetWeight { get; set; }
+    public double MaxWeight { get; }
+    public int Height { get; set; }
     protected int Depth { get; set; }
-
+    public string Id { get; set; }
 
     protected Container(double weight,double netWeight,double maxWeight,int height,int depth)
     {
@@ -21,8 +21,7 @@ public abstract class Container
 
     public abstract void DeleteProduct();
     public abstract void AddProduct(Product product,double weight);
-    
-
+    public abstract void GetInformation();
 
 
 
