@@ -52,7 +52,7 @@ public class GasContainer: Container, IHazardNotifier
 
     public override void GetInformation()
     {
-        Console.WriteLine("Gas container: " + Id + " contains: " + GasList.Count + " elements and weigh " + (NetWeight+Weight) + "kg");
+        Console.WriteLine("Gas container: " + Id + " contains: " + GasList.Count + " elements and weigh " + (NetWeight+Weight) + "kg" );
     }
 
     public void SendMessage()

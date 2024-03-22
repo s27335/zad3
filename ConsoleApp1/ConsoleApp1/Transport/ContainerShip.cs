@@ -53,20 +53,13 @@ public class ContainerShip
         
     }
 
-    public void DeleteContainer(string containerId)
+    public void DeleteContainer(Container container)
     {
-        bool exists = false;
-        foreach (var container in Containers)
+        if (Containers.Contains(container))
         {
-            if (container.Id == containerId)
-            {
-                Containers.Remove(container);
-                exists = true;
-                break;
-            }
+            Containers.Remove(container);
         }
-
-        if (!exists)
+        else
         {
             Console.WriteLine("Container does not exist!");
         }
@@ -115,6 +108,7 @@ public class ContainerShip
         {
             Console.Write("|" + container.Id + "| ");
         }
+        Console.WriteLine("\n" + "Total weight: " + Weight + "t");
     }
     
 }
