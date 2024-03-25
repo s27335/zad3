@@ -22,11 +22,13 @@ class Program
 
             liquidContainer.AddProduct(milk, 910);
             liquidContainer2.AddProduct(milk, 900);
-            coldContainer.AddProduct(bananas, 1400);
+            coldContainer.AddProduct(bananas, 1000);
             gasContainer.AddProduct(nitrogen, 100);
 
             ship.LoadContainer(liquidContainer);
-            ship.LoadContainerList([coldContainer, gasContainer]);
+            List<Container> containers =new List<Container>(){ coldContainer, gasContainer };
+            
+            ship.LoadContainerList(containers);
             ship.DeleteContainer(gasContainer);
 
             gasContainer.DeleteProduct();
